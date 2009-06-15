@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" 
+		xmlns:gx="http://www.google.com/kml/ext/2.2" 
+		xmlns:kml="http://www.opengis.net/kml/2.2" 
+		xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Easy Testing of Recursive Containers</name>
+	<Folder>
+		<name>Folder A</name>
+		
+		<Placemark>
+			<name>Point A.A</name>
+			<Point>
+				<coordinates>8.922092297639281,52.28729651710943,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Point A.B</name>
+			<Point>
+				<coordinates>9.922092297639281,52.28729651710943,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Point A.C</name>
+			<Point>
+				<coordinates>10.922092297639281,52.28729651710943,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Point A.D</name>
+			<Point>
+				<coordinates>11.922092297639281,52.28729651710943,0</coordinates>
+			</Point>
+		</Placemark>
+	</Folder>
+	
+	
+	<Folder>
+		<name>Folder B</name>
+		<Placemark>
+			<name>Point B.A</name>
+			<Point>
+				<coordinates>8.922092297639281,52.28729651710943,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Point B.B</name>
+			<Point>
+				<coordinates>8.922092297639281,52.28729651710943,0</coordinates>
+			</Point>
+		</Placemark>
+	</Folder>
+	
+</Document>
+</kml>
