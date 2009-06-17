@@ -9,6 +9,7 @@ import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.vividsolutions.jts.util.Assert;
 
 public class LineStringConverter extends CoordinateConverter<LineString> {
 	/*
@@ -27,6 +28,7 @@ public class LineStringConverter extends CoordinateConverter<LineString> {
 		}
 
 		public LineString unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+			Assert.equals("LineString", reader.getNodeName());
 			return super.readCoordinates(new LineString(), reader);
 		}
 		

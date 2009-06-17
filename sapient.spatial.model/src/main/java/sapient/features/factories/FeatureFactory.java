@@ -20,7 +20,7 @@ public abstract class FeatureFactory {
 	 * 
 	 * @param srs
 	 */
-	private FeatureFactory() {
+	protected FeatureFactory() {
 		
 	}
 

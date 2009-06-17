@@ -29,6 +29,10 @@ public class KMLFeature {
 	@XStreamAlias("description")
 	protected String description = null;
 	
+	/** @see http://code.google.com/apis/kml/documentation/kmlreference.html#extendeddata */
+	@XStreamAlias("ExtendedData")
+	protected String extendedData = null;
+	
 	@XStreamAlias("Snippet")
 	protected String snippet = null;
 	

@@ -1,5 +1,6 @@
 package org.geospatial.kml;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.geospatial.kml.geometries.KMLGeometry;
@@ -20,21 +21,29 @@ public class Placemark extends KMLFeature {
 	// if not annotated he create KMLGeometry, invokes marshaller, asks for points in placemarks
 	
 	
-//	@XStreamConverter(value = PointConverter.class)
+	@XStreamConverter(value = PointConverter.class)
 	@XStreamImplicit
-  private List<KMLGeometry> geometries;
+	private List<KMLGeometry> geometries;
 
 
 //	private String Snippet;
     @XStreamAlias("styleUrl")
     private String styleUrl;	
 //    
-    public List<? extends KMLGeometry> listGeometries() {
+    public List<KMLGeometry> listGeometries() {
+        if(geometries == null) {
+        	geometries = new ArrayList<KMLGeometry>();
+    	}
         return geometries;
+    
     }
 
     public void setGeometries(List<KMLGeometry> geometries) {
-        this.geometries = geometries;
+        listGeometries().addAll(geometries);
+    }
+    
+    public void addGeometry(KMLGeometry geometry) {
+    	listGeometries().add(geometry);
     }
 
     

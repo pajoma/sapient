@@ -2,11 +2,12 @@ package sapient.features;
 
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import sapient.features.annotations.Annotation;
-import sapient.features.geometries.Geometry;
+import com.vividsolutions.jts.geom.Geometry;
+
 
 /**
  * A feature is a "a prominent attribute or aspect of something", e.g. on a map.(wordnet) 
@@ -22,7 +23,7 @@ import sapient.features.geometries.Geometry;
  */
 public abstract class Feature {
 
-	private List<Annotation> annotList;
+	private List<Serializable> annotList;
 	private Geometry geom;
 
 	
@@ -43,8 +44,8 @@ public abstract class Feature {
 	/**
 	 * @param annot
 	 */
-	public void addAnnotation(Annotation annot) {
-		this.listAnnotations(null).add(annot);		
+	public void addAnnotation(Serializable annot) {
+		if(annot != null) this.listAnnotations(null).add(annot);		
 	}
 	
 	
@@ -52,9 +53,9 @@ public abstract class Feature {
 	 * @param filter
 	 * @return
 	 */
-	public List<Annotation> listAnnotations(Class filter) {
+	public List<Serializable> listAnnotations(Class filter) {
 		if(this.annotList == null) {
-			annotList = new ArrayList<Annotation>();
+			annotList = new ArrayList<Serializable>();
 		}
 
 		if(filter != null) {
@@ -64,4 +65,12 @@ public abstract class Feature {
 		return annotList;
 	}
 	
+	
+	/**
+	 * @param filter
+	 * @return
+	 */
+	public List<Serializable> listAnnotations() {
+		return listAnnotations(null);
+	}
 }

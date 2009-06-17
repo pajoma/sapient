@@ -11,9 +11,6 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class PointConverter extends CoordinateConverter<Point> {
 
-	public PointConverter() {
-		System.out.println("wheee");
-	}
 	public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
 		super.writeCoordinates((Point) source, writer);
 	}

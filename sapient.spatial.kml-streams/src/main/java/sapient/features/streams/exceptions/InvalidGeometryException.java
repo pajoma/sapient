@@ -1,4 +1,4 @@
-package sapient.features.streams.kml;
+package sapient.features.streams.exceptions;
 
 import org.geospatial.kml.geometries.KMLGeometry;
 

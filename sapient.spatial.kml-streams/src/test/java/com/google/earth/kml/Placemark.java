@@ -3,7 +3,7 @@ package com.google.earth.kml;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Placemark implements KmlFeature{
+public class Placemark implements KmlFeature {
     
     private String name;
     private String address;

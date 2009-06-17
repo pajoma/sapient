@@ -1,38 +1,59 @@
 package sapient.features.streams.kml.converter;
 
 import org.geospatial.kml.geometries.KMLGeometry;
-import org.geospatial.kml.geometries.Point;
 
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.util.Assert;
 
 
 public abstract class CoordinateConverter<T extends KMLGeometry> implements Converter {
 
 	protected void writeCoordinates(T p, HierarchicalStreamWriter writer) {
-		writer.startNode("coordinates");
-		StringBuffer sb = new StringBuffer();
-		for(Coordinate c : p.listCoordinates()) {
-			sb.append(c.x).append(",")
-			  .append(c.y).append(",")
-			  .append(c.z).append(" ");
+		try {
+			writer.startNode("coordinates");
+			StringBuffer sb = new StringBuffer();
+			for(Coordinate c : p.listCoordinates()) {
+				sb.append(c.x).append(",")
+				  .append(c.y).append(",")
+				  .append(c.z).append(" ");
+			}
+			writer.setValue(sb.toString());
+			
+		} catch (Exception e) {
+			System.out.println("CoordinateConverter.writeCoordinates()");
+			e.printStackTrace();
+			
+		} finally {
+			writer.endNode();
 		}
-		writer.setValue(sb.toString());
-		writer.endNode();
+
 	}
 
 	protected T readCoordinate(T geom, HierarchicalStreamReader reader) {
-		reader.moveDown();
-		return this.addCoordinate(geom, reader.getValue());
-		
+		return this.addCoordinate(geom, getCoordinatesValue(reader));
 	}
 	
 	protected T readCoordinates(T geom, HierarchicalStreamReader reader) {
-		reader.moveDown();
-		return this.addCoordinates(geom, reader.getValue());
+		return this.addCoordinates(geom, getCoordinatesValue(reader));
+	}
+	
+	private String getCoordinatesValue(HierarchicalStreamReader reader) {
+		if(! reader.hasMoreChildren()) return null;
 		
+		try {
+			while(reader.hasMoreChildren()) {
+				reader.moveDown();
+				if(reader.getNodeName().matches("coordinates")) break;
+				else reader.moveUp();
+			}
+		
+			return reader.getValue();
+		} finally {
+			reader.moveUp();
+		}		
 	}
 	
 	/**
@@ -51,28 +72,37 @@ public abstract class CoordinateConverter<T extends KMLGeometry> implements Conv
 	 * @param line
 	 */
 	protected T addCoordinates(T geom, String line) {
-		String[] points = line.split(" ");
-		
-		/* and then we add each point definition again and create new points */
-		for(String str : points) {
-			geom.addCoordinate(extractCoordinate(str));
+		try {
+			String[] points = line.split(" ");
+			
+			/* and then we add each point definition again and create new points */
+			for(String str : points) {
+				this.addCoordinate(geom, str);
+			}
+			return geom;
+		} catch (Exception e) {
+			System.out.println("CoordinateConverter.addCoordinates()");
+			e.printStackTrace();
 		}
-		return geom;
+		return null;
+	
 	}
 	
 	private Coordinate extractCoordinate(String line) {
-		Coordinate c = new Coordinate();
+		Coordinate c = null;
 		try {
+			c = new Coordinate();
 			String[] split = line.split(",");
-
-			c.x = Double.parseDouble(split[0]);
-			c.y = Double.parseDouble(split[1]);
+			Assert.equals(split.length, 3);
+			
+			// lat = y
+			// lon = x 
+			// lat / lon / height
+			c.y = Double.parseDouble(split[0]);
+			c.x = Double.parseDouble(split[1]);
 			c.z = Double.parseDouble(split[2]);
 			
-			System.out.println(c);
-			
 		} catch (Exception e) {
-			e.printStackTrace();
 			
 		}
 		return c;

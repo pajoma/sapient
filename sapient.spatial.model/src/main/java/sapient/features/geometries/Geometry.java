@@ -4,7 +4,11 @@ import sapient.features.Feature;
 
 import com.vividsolutions.jts.geom.GeometryFactory;
 
+
+
 public abstract class Geometry extends com.vividsolutions.jts.geom.Geometry {
+
+	
 	private static final long serialVersionUID = 6654858064155635467L;
 
 	
